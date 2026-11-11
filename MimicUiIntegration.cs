@@ -7,12 +7,10 @@ using MelonLoader;
 
 namespace PvzFmimic;
 
-// Uses the game's built-in Imitater (PlantType 245) as a temporary Mimic
-// entry until the mod has its own registered plant type and assets.
+// Almanac integration for the Mimic category. Seed injection is deliberately
+// disabled until a real custom Mimic plant type is registered.
 internal static class MimicUiIntegration
 {
-    private const int ExistingMimicLikePlantId = 245;
-    private static bool _seedAdded;
     private static bool _almanacTabAdded;
     private static object _almanacMenu;
 
@@ -29,7 +27,6 @@ internal static class MimicUiIntegration
             }
 
             var harmony = new global::HarmonyLib.Harmony("31747-arch.pvzfusion.mimic.ui");
-            Patch(assembly, harmony, "InitBoard", "AddCard", nameof(AddSeedPostfix), logger);
             Patch(assembly, harmony, "AlmanacPlantMenu", "Awake", nameof(AlmanacAwakePostfix), logger);
         }
         catch (Exception ex)
@@ -55,42 +52,6 @@ internal static class MimicUiIntegration
 
         harmony.Patch(target, postfix: new HarmonyMethod(postfix));
         logger.Msg("[Mimic/UI] Patched " + typeName + "." + methodName + ".");
-    }
-
-    private static void AddSeedPostfix(object __instance)
-    {
-        if (_seedAdded || __instance == null) return;
-        _seedAdded = true;
-        try
-        {
-            var createCard = __instance.GetType().GetMethods(
-                    BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-                .FirstOrDefault(m => m.Name == "CreateCard" &&
-                    m.GetParameters().Length == 3 &&
-                    m.GetParameters()[0].ParameterType.IsEnum &&
-                    m.GetParameters()[1].ParameterType == typeof(bool) &&
-                    m.GetParameters()[2].ParameterType == typeof(bool));
-            if (createCard == null)
-            {
-                MelonLogger.Warning("[Mimic/Seed] CreateCard(PlantType,bool,bool) not found.");
-                return;
-            }
-
-            var plantType = Enum.ToObject(createCard.GetParameters()[0].ParameterType,
-                ExistingMimicLikePlantId);
-            var card = createCard.Invoke(__instance, new object[] { plantType, false, false });
-            if (card == null)
-            {
-                MelonLogger.Warning("[Mimic/Seed] Game returned no Imitater card.");
-                return;
-            }
-
-            MelonLogger.Msg("[Mimic/Seed] Added the built-in Imitater seed as a temporary Mimic test entry (id 245).");
-        }
-        catch (Exception ex)
-        {
-            MelonLogger.Warning("[Mimic/Seed] Safe seed insertion failed: " + ex);
-        }
     }
 
     // The previous implementation registered a group on PlantCardPackageBuilder.
@@ -242,10 +203,9 @@ internal static class MimicUiIntegration
             if (plantType == null || !plantType.IsEnum) return;
 
             var list = Activator.CreateInstance(listType);
-            listType.GetMethod("Add")?.Invoke(list,
-                new[] { Enum.ToObject(plantType, ExistingMimicLikePlantId) });
-            showPlants.Invoke(_almanacMenu, new[] { list });
-            MelonLogger.Msg("[Mimic/Almanac] Displayed the Mimic test entry (Imitater, id 245).");
+            // Do not put the built-in Imitater into this list as a fake Mimic.
+            // The custom Mimic type must be registered before entries are displayed.
+            MelonLogger.Warning("[Mimic/Almanac] Mimic list is not populated yet: custom Mimic PlantType is not registered.");
         }
         catch (Exception ex)
         {
