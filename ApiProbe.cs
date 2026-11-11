@@ -306,6 +306,66 @@ internal static class ApiProbe
         }
     }
 
+    public static void DumpChallengeIntegrationApi(Action<string> log)
+    {
+        try
+        {
+            var assembly = AppDomain.CurrentDomain.GetAssemblies()
+                .FirstOrDefault(a => string.Equals(a.GetName().Name, "Assembly-CSharp", StringComparison.OrdinalIgnoreCase));
+            if (assembly == null) { log("[Mimic/ChallengeIntegration] Assembly-CSharp is not loaded."); return; }
+            Type[] types;
+            try { types = assembly.GetTypes(); }
+            catch (ReflectionTypeLoadException ex) { types = ex.Types.Where(t => t != null).ToArray(); }
+
+            var exact = new[]
+            {
+                "BaseLevelStrategy", "LevelData", "LevelType", "AdvantureLevel",
+                "ChallengeLevelData", "LevelRegistry", "LevelManager",
+                "SelectorScreen", "StarAdvantureLevelButton", "GodShootingLevelButton"
+            };
+            var selected = types.Where(t => exact.Contains(t.Name) ||
+                t.Name.IndexOf("Challenge", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                t.Name.IndexOf("Selector", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                t.Name.IndexOf("LevelButton", StringComparison.OrdinalIgnoreCase) >= 0)
+                .OrderBy(t => exact.Contains(t.Name) ? 0 : 1)
+                .ThenBy(t => t.FullName).Take(160).ToArray();
+
+            const BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic |
+                BindingFlags.Static | BindingFlags.Instance | BindingFlags.DeclaredOnly;
+            log("[Mimic/ChallengeIntegration] Types=" + selected.Length);
+            foreach (var type in selected)
+            {
+                log("[Mimic/ChallengeIntegration] TYPE " + type.FullName +
+                    " BASE " + (type.BaseType == null ? "<none>" : SafeTypeName(type.BaseType)) +
+                    (type.IsEnum ? " [ENUM]" : ""));
+                if (type.IsEnum)
+                {
+                    foreach (var name in Enum.GetNames(type))
+                    {
+                        try { log("[Mimic/ChallengeIntegration] ENUM " + type.Name + "." + name + "=" +
+                            Convert.ToInt64(Enum.Parse(type, name))); } catch { }
+                    }
+                }
+                foreach (var ctor in type.GetConstructors(flags).Take(8))
+                    log("[Mimic/ChallengeIntegration] CTOR " + type.Name + "(" +
+                        string.Join(", ", ctor.GetParameters().Select(p => SafeTypeName(p.ParameterType) + " " + p.Name)) + ")");
+                foreach (var method in type.GetMethods(flags).Where(m => !m.IsSpecialName).Take(55))
+                    log("[Mimic/ChallengeIntegration] METHOD " + SafeTypeName(method.ReturnType) + " " +
+                        method.Name + "(" + string.Join(", ", method.GetParameters().Select(p => SafeTypeName(p.ParameterType) + " " + p.Name)) + ")" +
+                        (method.IsStatic ? " [static]" : ""));
+                foreach (var property in type.GetProperties(flags).Take(35))
+                {
+                    var getter = property.GetGetMethod(true);
+                    log("[Mimic/ChallengeIntegration] PROPERTY " + SafeTypeName(property.PropertyType) + " " +
+                        property.Name + (getter != null && getter.IsStatic ? " [static]" : ""));
+                }
+                foreach (var field in type.GetFields(flags).Where(x => !x.Name.StartsWith("Native")).Take(25))
+                    log("[Mimic/ChallengeIntegration] FIELD " + SafeTypeName(field.FieldType) + " " + field.Name);
+            }
+        }
+        catch (Exception ex) { log("[Mimic/ChallengeIntegration] Scan failed: " + ex); }
+    }
+
     private static string SafeTypeName(Type type)
     {
         try { return type.FullName ?? type.Name; }
