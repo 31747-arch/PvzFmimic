@@ -203,6 +203,61 @@ internal static class ApiProbe
         }
     }
 
+
+    public static void DumpChallengeUiApi(Action<string> log)
+    {
+        try
+        {
+            var assembly = AppDomain.CurrentDomain.GetAssemblies()
+                .FirstOrDefault(a => string.Equals(a.GetName().Name, "Assembly-CSharp", StringComparison.OrdinalIgnoreCase));
+            if (assembly == null) return;
+
+            Type[] types;
+            try { types = assembly.GetTypes(); }
+            catch (ReflectionTypeLoadException ex) { types = ex.Types.Where(t => t != null).ToArray(); }
+
+            bool Has(string value, params string[] keys) =>
+                keys.Any(k => value.IndexOf(k, StringComparison.OrdinalIgnoreCase) >= 0);
+
+            var matches = types.Where(t =>
+                t.Name == "LevelType" || t.Name == "ChallengeLevel" ||
+                (Has(t.Name, "Challenge") && Has(t.Name, "UI", "Menu", "Panel", "Button", "Select", "Choose", "Screen", "Tab", "Group")) ||
+                (Has(t.Name, "Level", "Mode") && Has(t.Name, "UI", "Menu", "Panel", "Button", "Select", "Choose", "Screen", "Tab", "Group")))
+                .OrderBy(t => t.FullName).Take(180).ToArray();
+
+            log("[Mimic/ChallengeUI] Found " + matches.Length + " candidate UI/level types.");
+            const BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic |
+                                       BindingFlags.Static | BindingFlags.Instance | BindingFlags.DeclaredOnly;
+            foreach (var type in matches)
+            {
+                log("[Mimic/ChallengeUI] TYPE " + type.FullName + (type.IsEnum ? " [ENUM]" : ""));
+                if (type.IsEnum)
+                {
+                    foreach (var name in Enum.GetNames(type))
+                    {
+                        try { log("[Mimic/ChallengeUI] ENUM " + name + " = " + Convert.ToInt64(Enum.Parse(type, name))); }
+                        catch { log("[Mimic/ChallengeUI] ENUM " + name); }
+                    }
+                }
+                foreach (var method in type.GetMethods(flags).Where(m => !m.IsSpecialName).Take(65))
+                {
+                    var args = string.Join(", ", method.GetParameters()
+                        .Select(p => SafeTypeName(p.ParameterType) + " " + p.Name));
+                    log("[Mimic/ChallengeUI] METHOD " + SafeTypeName(method.ReturnType) + " " +
+                        method.Name + "(" + args + ")" + (method.IsStatic ? " [static]" : ""));
+                }
+                foreach (var property in type.GetProperties(flags).Take(45))
+                    log("[Mimic/ChallengeUI] PROPERTY " + SafeTypeName(property.PropertyType) + " " + property.Name);
+                foreach (var field in type.GetFields(flags).Where(x => !x.Name.StartsWith("Native")).Take(30))
+                    log("[Mimic/ChallengeUI] FIELD " + SafeTypeName(field.FieldType) + " " + field.Name);
+            }
+        }
+        catch (Exception ex)
+        {
+            log("[Mimic/ChallengeUI] Scan failed: " + ex);
+        }
+    }
+
     private static string SafeTypeName(Type type)
     {
         try { return type.FullName ?? type.Name; }
