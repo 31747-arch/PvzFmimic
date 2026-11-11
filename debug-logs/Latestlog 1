@@ -1,0 +1,312 @@
+[15:20:51.657] [MelonLoader.Bootstrap] Using HostFXR Path: C:\Program Files\dotnet\host\fxr\8.0.8\hostfxr.dll
+[15:20:51.662] [MelonLoader.Bootstrap] Using .NET runtime: 'C:\Program Files\dotnet\host\fxr\8.0.8\hostfxr.dll'
+
+[15:20:52.217] ------------------------------
+[15:20:52.220] MelonLoader v0.7.3 Open-Beta
+[15:20:52.222] OS: Windows 11
+[15:20:52.223] Hash Code: BDD43DC0F3893C208C95389B863AB61C967AE14204DA0DD8051647E754C8709B
+[15:20:52.223] ------------------------------
+[15:20:52.223] Game Type: Il2cpp
+[15:20:52.223] Game Arch: x64
+[15:20:52.224] ------------------------------
+[15:20:52.224] Command-Line: 
+[15:20:52.224] ------------------------------
+[15:20:52.225] Core::BasePath = C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files
+[15:20:52.226] Game::BasePath = C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files
+[15:20:52.226] Game::DataPath = C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\PlantsVsZombiesRH_Data
+[15:20:52.226] Game::ApplicationPath = C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\PlantsVsZombiesRH.exe
+[15:20:52.227] Runtime Type: net6
+[15:20:52.346] ------------------------------
+[15:20:52.346] Game Name: PlantsVsZombiesRH
+[15:20:52.346] Game Developer: LanPiaoPiao
+[15:20:52.349] Unity Version: 2022.3.62f1c1
+[15:20:52.349] Game Version: 4.0.5
+[15:20:52.349] ------------------------------
+
+[15:20:53.641] Preferences Loaded!
+
+[15:20:53.688] Loading UserLibs...
+[15:20:53.696] 0 UserLibs loaded.
+
+[15:20:53.697] Loading Plugins...
+[15:20:53.712] 0 Plugins loaded.
+
+[15:20:55.304] Loading Il2CppAssemblyGenerator...
+[15:20:55.371] [Il2CppAssemblyGenerator] Contacting RemoteAPI...
+[15:20:55.823] [Il2CppAssemblyGenerator] Game Not Found on RemoteAPI Host (https://api.melonloader.com/api/v1/game/plantsvszombiesrh)
+[15:20:55.823] [Il2CppAssemblyGenerator] RemoteAPI.DumperVersion = null
+[15:20:55.825] [Il2CppAssemblyGenerator] RemoteAPI.ObfuscationRegex = null
+[15:20:55.825] [Il2CppAssemblyGenerator] RemoteAPI.MappingURL = null
+[15:20:55.825] [Il2CppAssemblyGenerator] RemoteAPI.MappingFileSHA512 = null
+[15:20:55.838] [Il2CppAssemblyGenerator] Using Cpp2IL Version: 2022.1.0-pre-release.21
+[15:20:55.839] [Il2CppAssemblyGenerator] Using Il2CppInterop Version = 1.5.1-ci.845+f03c8f4ae507d47ea814f3d11d1ec6b0391c1576
+[15:20:55.839] [Il2CppAssemblyGenerator] Using Unity Dependencies Version = 2022.3.62
+[15:20:55.840] [Il2CppAssemblyGenerator] Using Deobfuscation Regex = null
+[15:20:55.841] [Il2CppAssemblyGenerator] Cpp2IL is up to date.
+[15:20:55.845] [Il2CppAssemblyGenerator] Cpp2IL.Plugin.StrippedCodeRegSupport is up to date.
+[15:20:55.846] [Il2CppAssemblyGenerator] UnityDependencies is up to date.
+[15:20:55.847] [Il2CppAssemblyGenerator] Checking GameAssembly...
+[15:20:56.182] [Il2CppAssemblyGenerator] Assembly is up to date. No Generation Needed.
+
+[15:20:56.186] Loading Mods...
+[15:20:56.286] ------------------------------
+[15:20:56.311] Melon Assembly loaded: '.\Mods\AudioImportLib.dll'
+[15:20:56.311] SHA256 Hash: '92484FABE1C1F12590112FFCABDEBE5DA6FC23D38A0DFB77DD344589716C50DF'
+[15:20:56.316] Melon Assembly loaded: '.\Mods\Blooms_QOL.dll'
+[15:20:56.316] SHA256 Hash: '71F33F37B71576BDD821BA5F55E837FE23AD7AAE035D4D671498E2D4CAE158E4'
+[15:20:56.323] Melon Assembly loaded: '.\Mods\PrototypePea.dll'
+[15:20:56.323] SHA256 Hash: '841D2BBBDC9CB743CE5BF1609B71B9CE167CDB9A679717CFD62D77221AD1C971'
+[15:20:56.328] Melon Assembly loaded: '.\Mods\PvzFmimic.dll'
+[15:20:56.328] SHA256 Hash: '6D9A70299AB11E2EF6ED4241BDA39AC6469615B2524B77EE6988643649F12D76'
+[15:20:56.335] Melon Assembly loaded: '.\Mods\PvZ_Fusion_Translator.dll'
+[15:20:56.336] SHA256 Hash: 'BDEC41ED3111554D326F41F943BDF5E7443D0B63E2B337AEC6124EE14FB33F18'
+[15:20:56.340] Melon Assembly loaded: '.\Mods\RemovableCards.dll'
+[15:20:56.343] SHA256 Hash: 'E351F3AFAEF4AD1C00455392652263810CCCE31B69EB8B0F11B483A76A91308B'
+
+[15:20:56.850] ------------------------------
+[15:20:56.851] Blooms QOL v1.0.0
+[15:20:56.852] by cassidy
+[15:20:56.852] Assembly: Blooms_QOL.dll
+[15:20:56.853] ------------------------------
+[15:20:56.863] ------------------------------
+[15:20:56.863] Prototype Pea v1.0.0
+[15:20:56.864] by Mark
+[15:20:56.864] Assembly: PrototypePea.dll
+[15:20:56.864] ------------------------------
+[15:20:56.877] ------------------------------
+[15:20:56.877] PvZ Fusion Mimic v1.0.2
+[15:20:56.877] by 31747-arch
+[15:20:56.878] Assembly: PvzFmimic.dll
+[15:20:56.878] ------------------------------
+[15:20:56.888] ------------------------------
+[15:20:56.888] PvZ Fusion Translator v231.0.0
+[15:20:56.888] by dynaslash / arifrios1st / lancerx0 / JustNull / Dakosha / Mamoru-kun / cassidy / Teyliu
+[15:20:56.889] Assembly: PvZ_Fusion_Translator.dll
+[15:20:56.890] ------------------------------
+[15:20:56.898] ------------------------------
+[15:20:56.898] Removable Cards v1.0.0
+[15:20:56.898] by Mark
+[15:20:56.899] Assembly: RemovableCards.dll
+[15:20:56.899] ------------------------------
+[15:20:56.908] ------------------------------
+[15:20:56.908] AudioImportLib v1.0.0
+[15:20:56.909] by trev & zCubed
+[15:20:56.909] Assembly: AudioImportLib.dll
+[15:20:56.910] ------------------------------
+[15:20:56.910] ------------------------------
+[15:20:56.911] 6 Mods loaded.
+
+[15:20:59.258] [WARNING] [Il2CppInterop] Class::Init signatures have been exhausted, using a substitute!
+[15:20:59.328] [Il2CppInterop] Registered mono type MelonLoader.Support.MonoEnumeratorWrapper in il2cpp domain
+[15:20:59.475] Support Module Loaded: C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\MelonLoader\Dependencies\SupportModules\Il2Cpp.dll
+[15:20:59.512] [Il2CppInterop] Registered mono type Blooms_QOL.Better_Fusion_Suite.PreventRecover in il2cpp domain
+[15:21:03.090] [Prototype_Pea] Prototype Pea loaded (plant id 1999).
+[15:21:03.091] [PvZ_Fusion_Mimic] PvZ Fusion Mimic loaded (safe startup mode).
+[15:21:03.092] [PvZ_Fusion_Mimic] Mimic seed setup will wait until the first scene is loaded.
+[15:21:03.110] [PvZ Fusion Translator] Preferences Saved!
+[15:21:03.120] [WARNING] [PvZ_Fusion_Translator] Loaded language English
+[15:21:03.123] [PvZ_Fusion_Translator] Language has been loaded: English
+[15:21:03.143] [PvZ_Fusion_Translator] Attempting to read https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/%5BCustom%20Textures%5D/Custom_TOC.json
+[15:21:03.317] [PvZ_Fusion_Translator] Successfully loaded data from https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/%5BCustom%20Textures%5D/Custom_TOC.json!
+[15:21:03.529] [PvZ_Fusion_Translator] Attempting to read https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Textures/Texture_TOC.json
+[15:21:03.698] [PvZ_Fusion_Translator] Successfully loaded data from https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Textures/Texture_TOC.json!
+[15:21:03.706] [PvZ_Fusion_Translator] Attempting to read https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Textures/Menu/剧情文本.png
+[15:21:03.899] [ERROR] [PvZ_Fusion_Translator] Failed to load data from https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Textures/Menu/剧情文本.png! Falling back...
+[15:21:03.900] [ERROR] [PvZ_Fusion_Translator] Status code: NotFound
+[15:21:03.903] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Game\FinalWave.png
+[15:21:03.906] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Game\FlagMeterLevelProgress.png
+[15:21:03.907] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Game\Graves.png
+[15:21:03.950] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Game\HugeWave.png
+[15:21:03.954] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Game\StartPlant.png
+[15:21:03.957] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Game\StartReady.png
+[15:21:03.959] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Game\StartSet.png
+[15:21:03.962] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Logo\Logo3.0.png
+[15:21:04.003] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Logo\Logo3.1.png
+[15:21:04.040] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Logo\Logo3.2.png
+[15:21:04.113] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Logo\Logo3.3.png
+[15:21:04.136] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Logo\Logo3.4.png
+[15:21:04.177] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Logo\Logo3.5.png
+[15:21:04.196] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Logo\Logo3.6.png
+[15:21:04.252] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Logo\LogoSnow.png
+[15:21:04.297] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Logo\LogoSnow_old.png
+[15:21:04.324] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Logo\标题合集.png
+[15:21:04.384] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\MainMenu3.0.png
+[15:21:04.442] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\MainMenu3.0travel2.png
+[15:21:04.494] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\mysterious.png
+[15:21:04.499] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\mysterious_highlight.png
+[15:21:04.504] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\NewAdv.png
+[15:21:04.508] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\options_menuback.png
+[15:21:04.513] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\SelectorScreen_Adventure_button.png
+[15:21:04.516] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\SelectorScreen_Adventure_highlight.png
+[15:21:04.518] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\SelectorScreen_Almanac.png
+[15:21:04.522] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\SelectorScreen_AlmanacHighlight.png
+[15:21:04.524] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\SelectorScreen_Challenges_button.png
+[15:21:04.526] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\SelectorScreen_Challenges_highlight.png
+[15:21:04.528] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\SelectorScreen_Challenge_button.png
+[15:21:04.531] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\SelectorScreen_Challenge_highlight.png
+[15:21:04.535] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\SelectorScreen_Help1.png
+[15:21:04.537] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\SelectorScreen_Help2.png
+[15:21:04.538] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\SelectorScreen_Options1.png
+[15:21:04.539] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\SelectorScreen_Options2.png
+[15:21:04.541] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\SelectorScreen_Quit1.png
+[15:21:04.542] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\SelectorScreen_Quit2.png
+[15:21:04.542] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\SelectorScreen_Vasebreaker_button.png
+[15:21:04.544] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\SelectorScreen_vasebreaker_highlight.png
+[15:21:04.546] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\SelectorScreen_WoodSign1.png
+[15:21:04.549] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\SelectorScreen_WoodSign2.png
+[15:21:04.551] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\SelectorScreen_WoodSign2_press.png
+[15:21:04.557] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\SelectorScreen_ZenGarden.png
+[15:21:04.559] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\SelectorScreen_ZenGardenHighlight.png
+[15:21:04.561] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\SZW.png
+[15:21:04.635] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\thanks.png
+[15:21:04.655] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\TowerEnter.png
+[15:21:04.672] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\travel.png
+[15:21:04.684] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\推荐入口.png
+[15:21:04.698] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\深渊入口.png
+[15:21:04.713] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\版本更新.png
+[15:21:04.727] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Menu\钥匙经典.png
+[15:21:04.742] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Particles\Dong.png
+[15:21:04.753] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Particles\Doom.png
+[15:21:04.756] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Particles\ExplosionPowie.png
+[15:21:04.759] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Particles\ExplosionSpudow.png
+[15:21:04.761] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Particles\guang.png
+[15:21:04.762] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Particles\Pow.png
+[15:21:04.763] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Particles\Sproing.png
+[15:21:04.766] [PvZ_Fusion_Translator] Loading File : C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Textures\Particles\SunExplosionPowie.png
+[15:21:04.772] [PvZ_Fusion_Translator] Attempting to read https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Textures/Texture_TOC.json
+[15:21:04.825] [PvZ_Fusion_Translator] Successfully loaded data from https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Textures/Texture_TOC.json!
+[15:21:04.829] [PvZ_Fusion_Translator] Attempting to read https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Textures/Menu/剧情文本.png
+[15:21:04.866] [ERROR] [PvZ_Fusion_Translator] Failed to load data from https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Textures/Menu/剧情文本.png! Falling back...
+[15:21:04.867] [ERROR] [PvZ_Fusion_Translator] Status code: NotFound
+[15:21:04.870] [PvZ_Fusion_Translator] Loading File (Sprite): C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Sprites\Particles\Dong.png
+[15:21:04.877] [PvZ_Fusion_Translator] Loading File (Sprite): C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Sprites\Particles\Doom.png
+[15:21:04.879] [PvZ_Fusion_Translator] Loading File (Sprite): C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Sprites\Particles\ExplosionPowie.png
+[15:21:04.880] [PvZ_Fusion_Translator] Loading File (Sprite): C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Sprites\Particles\ExplosionSpudow.png
+[15:21:04.882] [PvZ_Fusion_Translator] Loading File (Sprite): C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Sprites\Particles\guang.png
+[15:21:04.884] [PvZ_Fusion_Translator] Loading File (Sprite): C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Sprites\Particles\Pow.png
+[15:21:04.887] [PvZ_Fusion_Translator] Loading File (Sprite): C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Sprites\Particles\Sproing.png
+[15:21:04.892] [PvZ_Fusion_Translator] Loading File (Sprite): C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\Mods\PvZ_Fusion_Translator\Localization\English\Sprites\Particles\SunExplosionPowie.png
+[15:21:04.894] [PvZ_Fusion_Translator] Textures loaded successfully.
+[15:21:04.898] [PvZ_Fusion_Translator] Attempting to read https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Strings/translation_strings.json
+[15:21:05.101] [PvZ_Fusion_Translator] Successfully loaded data from https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Strings/translation_strings.json!
+[15:21:05.109] [PvZ_Fusion_Translator] Attempting to read https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Strings/translation_regexs.json
+[15:21:05.286] [PvZ_Fusion_Translator] Successfully loaded data from https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Strings/translation_regexs.json!
+[15:21:05.289] [PvZ_Fusion_Translator] Attempting to read https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Strings/customlevel_strings.json
+[15:21:05.476] [PvZ_Fusion_Translator] Successfully loaded data from https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Strings/customlevel_strings.json!
+[15:21:05.478] [PvZ_Fusion_Translator] Attempting to read https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Strings/customlevel_regexs.json
+[15:21:05.655] [PvZ_Fusion_Translator] Successfully loaded data from https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Strings/customlevel_regexs.json!
+[15:21:05.658] [PvZ_Fusion_Translator] Attempting to read https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Strings/changelog.txt
+[15:21:05.827] [PvZ_Fusion_Translator] Successfully loaded data from https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Strings/changelog.txt!
+[15:21:05.828] [PvZ_Fusion_Translator] Attempting to read https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Strings/tips_iz.json
+[15:21:06.022] [PvZ_Fusion_Translator] Successfully loaded data from https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Strings/tips_iz.json!
+[15:21:06.109] [PvZ_Fusion_Translator] Attempting to read https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Strings/tips_fs.json
+[15:21:06.294] [PvZ_Fusion_Translator] Successfully loaded data from https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Strings/tips_fs.json!
+[15:21:06.339] [PvZ_Fusion_Translator] Attempting to read https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Strings/gods_evolved.json
+[15:21:06.532] [PvZ_Fusion_Translator] Successfully loaded data from https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Strings/gods_evolved.json!
+[15:21:06.536] [PvZ_Fusion_Translator] Attempting to read https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Almanac/LawnStringsTranslate.json
+[15:21:06.781] [PvZ_Fusion_Translator] Successfully loaded data from https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Almanac/LawnStringsTranslate.json!
+[15:21:06.814] [PvZ_Fusion_Translator] Attempting to read https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Almanac/ZombieStringsTranslate.json
+[15:21:07.043] [PvZ_Fusion_Translator] Successfully loaded data from https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Almanac/ZombieStringsTranslate.json!
+[15:21:07.044] [PvZ_Fusion_Translator] Attempting to read https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Almanac/DetailStringsTranslate.json
+[15:21:07.212] [PvZ_Fusion_Translator] Successfully loaded data from https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Almanac/DetailStringsTranslate.json!
+[15:21:07.220] [PvZ_Fusion_Translator] Attempting to read https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Strings/travel_buffs.json
+[15:21:07.419] [PvZ_Fusion_Translator] Successfully loaded data from https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Strings/travel_buffs.json!
+[15:21:07.511] [PvZ_Fusion_Translator] Strings loaded successfully.
+[15:21:07.517] [PvZ Fusion Translator] Preferences Saved!
+[15:21:07.521] [AudioImportLib] Loading BASS from C:\Users\Mark-\Videos\Captures\sites\PvZ.Fusion.Multi-lang.4.0.5.2.Alpha.by.Blooms\Game Files\UserData\AudioImportLib\bass.dll
+[15:21:07.845] [PvZ_Fusion_Translator] Added Override: Battle
+[15:21:08.302] [PvZ_Fusion_Translator] Added Override: Boss2
+[15:21:08.657] [PvZ_Fusion_Translator] Added Override: Day
+[15:21:09.008] [PvZ_Fusion_Translator] Added Override: Day_drum
+[15:21:09.566] [PvZ_Fusion_Translator] Added Override: Fog
+[15:21:10.126] [PvZ_Fusion_Translator] Added Override: Fog_drum
+[15:21:10.890] [PvZ_Fusion_Translator] Added Override: Garden
+[15:21:11.205] [PvZ_Fusion_Translator] Added Override: IZ
+[15:21:11.528] [PvZ_Fusion_Translator] Added Override: loon
+[15:21:12.305] [PvZ_Fusion_Translator] Added Override: MainMenu
+[15:21:12.735] [PvZ_Fusion_Translator] Added Override: Night
+[15:21:13.189] [PvZ_Fusion_Translator] Added Override: Night_drum
+[15:21:13.690] [PvZ_Fusion_Translator] Added Override: Pool
+[15:21:14.214] [PvZ_Fusion_Translator] Added Override: Pool_drum
+[15:21:14.558] [PvZ_Fusion_Translator] Added Override: Roof
+[15:21:14.913] [PvZ_Fusion_Translator] Added Override: Roof_drum
+[15:21:14.917] [PvZ_Fusion_Translator] Added Override: Roof_pre
+[15:21:14.961] [PvZ_Fusion_Translator] Added Override: SelectCard
+[15:21:15.349] [PvZ_Fusion_Translator] Added Override: UltimateBattle
+[15:21:17.580] [PvZ_Fusion_Translator] Font for language 'arabic' loaded
+[15:21:17.587] [PvZ_Fusion_Translator] Font for language 'english' loaded
+[15:21:17.597] [PvZ_Fusion_Translator] Font for language 'japanese' loaded
+[15:21:17.599] [PvZ_Fusion_Translator] Font for language 'korean' loaded
+[15:21:17.601] [PvZ_Fusion_Translator] Font for language 'polish' loaded
+[15:21:17.606] [PvZ_Fusion_Translator] Font for language 'romanian' loaded
+[15:21:17.608] [PvZ_Fusion_Translator] Font for language 'russian' loaded
+[15:21:17.614] [PvZ_Fusion_Translator] Font for language 'spanish' loaded
+[15:21:17.620] [PvZ_Fusion_Translator] Font for language 'turkish' loaded
+[15:21:17.629] [PvZ_Fusion_Translator] Font for language 'ukrainian' loaded
+[15:21:17.636] [PvZ_Fusion_Translator] Font for language 'vietnamese' loaded
+[15:21:17.665] [PvZ_Fusion_Translator] Fallback font for language 'japanese' added
+[15:21:17.666] [PvZ_Fusion_Translator] Fallback font for language 'korean' added
+[15:21:17.667] [Removable_Cards] Removable Cards loaded: pre-selected campaign cards can now be removed.
+[15:21:30.847] [Prototype_Pea] Fusion added: Garlic + Plantern = Prototype Pea
+[15:21:37.552] [Il2CppInterop] Registered mono type MelonLoader.Support.SM_Component in il2cpp domain
+[15:21:37.566] [PvZ_Fusion_Mimic] [Mimic/Init] First scene loaded: Main (build index 0). Starting seed-hook setup.
+[15:21:37.712] [PvZ_Fusion_Mimic] [Mimic/Seed] Installed placement identity patch on 1 CreatePlant.SetPlant overload(s).
+[15:21:37.712] [PvZ_Fusion_Mimic] [Mimic/Seed] Seed registration hooks installed. Waiting for the seed-selection screen.
+[15:21:37.713] [PvZ_Fusion_Mimic] [Mimic/Init] Seed-hook setup call completed.
+[15:21:38.377] [Il2CppInterop] Registered mono type Il2CppInterop.Runtime.DelegateSupport+Il2CppToMonoDelegateReference in il2cpp domain
+[15:21:38.451] [PvZ_Fusion_Translator] Attempting to read https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Strings/changelog.txt
+[15:21:38.486] [PvZ_Fusion_Translator] Successfully loaded data from https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Strings/changelog.txt!
+[15:21:38.701] [PvZ_Fusion_Translator] OK! Replaced Texture FlagMeterLevelProgress
+[15:21:38.712] [PvZ_Fusion_Translator] OK! Replaced Texture SeedChooser_Background
+[15:21:38.715] [PvZ_Fusion_Translator] OK! Replaced Texture Almanac_GroundDay
+[15:21:38.717] [PvZ_Fusion_Translator] OK! Replaced Texture Almanac_GroundNight
+[15:21:38.789] [PvZ_Fusion_Translator] OK! Replaced Texture Graves
+[15:21:38.792] [PvZ_Fusion_Translator] OK! Replaced Texture Sproing
+[15:21:38.808] [PvZ_Fusion_Translator] OK! Replaced Texture Dong
+[15:21:38.810] [PvZ_Fusion_Translator] OK! Replaced Texture Doom
+[15:21:38.811] [PvZ_Fusion_Translator] OK! Replaced Texture ExplosionPowie
+[15:21:38.813] [PvZ_Fusion_Translator] OK! Replaced Texture ExplosionSpudow
+[15:21:38.814] [PvZ_Fusion_Translator] OK! Replaced Texture guang
+[15:21:38.816] [PvZ_Fusion_Translator] OK! Replaced Texture Pow
+[15:21:38.834] [PvZ_Fusion_Translator] OK! Replaced Texture Almanac_GroundDay
+[15:21:38.839] [PvZ_Fusion_Translator] OK! Replaced Texture Almanac_GroundNight
+[15:21:38.843] [PvZ_Fusion_Translator] OK! Replaced Texture Almanac_GroundNightPool
+[15:21:38.848] [PvZ_Fusion_Translator] OK! Replaced Texture Almanac_GroundPool
+[15:21:38.856] [PvZ_Fusion_Translator] OK! Replaced Texture Almanac_GroundRoof
+[15:21:38.869] [PvZ_Fusion_Translator] OK! Replaced Texture Almanac_PlantCard
+[15:21:38.918] [PvZ_Fusion_Translator] OK! Replaced Texture Almanac_ZombieBack
+[15:21:38.928] [PvZ_Fusion_Translator] OK! Replaced Texture Almanac_ZombieCard
+[15:21:38.988] [PvZ_Fusion_Translator] OK! Replaced Texture plant
+[15:21:38.995] [PvZ_Fusion_Translator] OK! Replaced Texture mysterious
+[15:21:39.002] [PvZ_Fusion_Translator] OK! Replaced Texture mysterious_highlight
+[15:21:39.009] [PvZ_Fusion_Translator] OK! Replaced Texture SelectorScreen_Adventure_button
+[15:21:39.013] [PvZ_Fusion_Translator] OK! Replaced Texture SelectorScreen_Adventure_highlight
+[15:21:39.014] [PvZ_Fusion_Translator] OK! Replaced Texture SelectorScreen_Almanac
+[15:21:39.016] [PvZ_Fusion_Translator] OK! Replaced Texture SelectorScreen_AlmanacHighlight
+[15:21:39.020] [PvZ_Fusion_Translator] OK! Replaced Texture SelectorScreen_Challenge_button
+[15:21:39.027] [PvZ_Fusion_Translator] OK! Replaced Texture SelectorScreen_Challenge_highlight
+[15:21:39.030] [PvZ_Fusion_Translator] OK! Replaced Texture SelectorScreen_Challenges_button
+[15:21:39.032] [PvZ_Fusion_Translator] OK! Replaced Texture SelectorScreen_Challenges_highlight
+[15:21:39.033] [PvZ_Fusion_Translator] OK! Replaced Texture SelectorScreen_Help1
+[15:21:39.033] [PvZ_Fusion_Translator] OK! Replaced Texture SelectorScreen_Help2
+[15:21:39.034] [PvZ_Fusion_Translator] OK! Replaced Texture SelectorScreen_Options1
+[15:21:39.034] [PvZ_Fusion_Translator] OK! Replaced Texture SelectorScreen_Options2
+[15:21:39.037] [PvZ_Fusion_Translator] OK! Replaced Texture SelectorScreen_Quit1
+[15:21:39.038] [PvZ_Fusion_Translator] OK! Replaced Texture SelectorScreen_Quit2
+[15:21:39.040] [PvZ_Fusion_Translator] OK! Replaced Texture SelectorScreen_Vasebreaker_button
+[15:21:39.042] [PvZ_Fusion_Translator] OK! Replaced Texture SelectorScreen_vasebreaker_highlight
+[15:21:39.045] [PvZ_Fusion_Translator] OK! Replaced Texture SelectorScreen_WoodSign1
+[15:21:39.046] [PvZ_Fusion_Translator] OK! Replaced Texture SelectorScreen_WoodSign2
+[15:21:39.048] [PvZ_Fusion_Translator] OK! Replaced Texture SelectorScreen_WoodSign2_press
+[15:21:39.050] [PvZ_Fusion_Translator] OK! Replaced Texture SelectorScreen_ZenGarden
+[15:21:39.054] [PvZ_Fusion_Translator] OK! Replaced Texture SelectorScreen_ZenGardenHighlight
+[15:21:39.069] [PvZ_Fusion_Translator] OK! Replaced Texture travel
+[15:21:39.085] [PvZ_Fusion_Translator] OK! Replaced Texture 钥匙经典
+[15:21:39.149] [PvZ_Fusion_Translator] OK! Replaced Texture MainMenu3.0
+[15:21:39.218] [PvZ_Fusion_Translator] OK! Replaced Texture MainMenu3.0travel2
+[15:21:39.236] [PvZ_Fusion_Translator] OK! Replaced Texture options_menuback
+[15:21:39.405] [PvZ_Fusion_Translator] OK! Replaced Texture SZW
+[15:21:39.434] [PvZ_Fusion_Translator] OK! Replaced Texture 推荐入口
+[15:21:39.452] [PvZ_Fusion_Translator] OK! Replaced Texture 版本更新
+[15:21:39.463] [PvZ_Fusion_Translator] Attempting to read https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Strings/travel_buffs.json
+[15:21:39.517] [PvZ_Fusion_Translator] Successfully loaded data from https://raw.githubusercontent.com/Teyliu/PVZF-Translation/refs/heads/main/PvZ_Fusion_Translator/Localization/English/Strings/travel_buffs.json!
