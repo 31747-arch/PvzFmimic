@@ -36,7 +36,7 @@ internal static class MimicUiIntegration
         }
     }
 
-    private static void Patch(Assembly assembly, Harmony harmony, string typeName,
+    private static void Patch(Assembly assembly, global::HarmonyLib.Harmony harmony, string typeName,
         string methodName, string postfixName, MelonLogger.Instance logger)
     {
         var type = assembly.GetTypes().FirstOrDefault(t => t.Name == typeName);
