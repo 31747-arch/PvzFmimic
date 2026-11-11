@@ -150,19 +150,35 @@ internal static class MimicSeedInjection
             var mimicPreview = Instantiate(sourcePreview);
             if (mimicPrefab == null || mimicPreview == null)
             {
+                DestroyUnityObject(mimicPrefab);
+                DestroyUnityObject(mimicPreview);
                 _logger?.Warning("[Mimic/Seed] Could not clone the temporary base resources.");
                 return false;
             }
 
-            SetObjectName(mimicPrefab, "Mimic_PlantPrefab");
-            SetObjectName(mimicPreview, "Mimic_PlantPreview");
-            SetTag(mimicPrefab, "Plant");
-            SetTag(mimicPreview, "Preview");
-            SetActive(mimicPrefab, false);
-            SetActive(mimicPreview, false);
+            // Fusion collections may contain either GameObjects or components.
+            // Instantiate(component) creates a live scene object too, so always
+            // deactivate its owning GameObject rather than calling SetActive on
+            // the component wrapper (which silently did nothing before).
+            var mimicPrefabObject = GetGameObject(mimicPrefab);
+            var mimicPreviewObject = GetGameObject(mimicPreview);
+            if (mimicPrefabObject == null || mimicPreviewObject == null ||
+                !SetActive(mimicPrefabObject, false) || !SetActive(mimicPreviewObject, false))
+            {
+                DestroyUnityObject(mimicPrefab);
+                DestroyUnityObject(mimicPreview);
+                _logger?.Warning("[Mimic/Seed] Could not deactivate cloned resources; discarded them to prevent scene objects at the origin.");
+                return false;
+            }
+
+            SetObjectName(mimicPrefabObject, "Mimic_PlantPrefab");
+            SetObjectName(mimicPreviewObject, "Mimic_PlantPreview");
+            SetTag(mimicPrefabObject, "Plant");
+            SetTag(mimicPreviewObject, "Preview");
 
             var plantComponentType = game.GetTypes().FirstOrDefault(t => t.Name == "Plant");
-            var plantComponent = plantComponentType == null ? null : GetComponent(mimicPrefab, plantComponentType);
+            var plantComponent = plantComponentType == null ? null :
+                (plantComponentType.IsInstanceOfType(mimicPrefab) ? mimicPrefab : GetComponent(mimicPrefabObject, plantComponentType));
             if (plantComponent == null || !SetMember(plantComponent, "thePlantType", mimicType))
             {
                 _logger?.Warning("[Mimic/Seed] Could not assign the custom PlantType to the cloned plant prefab.");
@@ -173,7 +189,7 @@ internal static class MimicSeedInjection
             if (sprite != null)
             {
                 var spriteRendererType = FindType("UnityEngine.SpriteRenderer");
-                var spriteRenderer = spriteRendererType == null ? null : GetComponent(mimicPreview, spriteRendererType);
+                var spriteRenderer = spriteRendererType == null ? null : GetComponent(mimicPreviewObject, spriteRendererType);
                 if (spriteRenderer != null)
                     SetMember(spriteRenderer, "sprite", sprite);
             }
@@ -243,9 +259,8 @@ internal static class MimicSeedInjection
             else
                 SetMember(__result, "thePlantType", Enum.ToObject(FindType("Il2Cpp.PlantType"), MimicPlantId));
 
-            // The cloned prefab is kept inactive so it cannot appear in the lawn
-            // before placement. Activate the actual instance once the game creates it.
-            SetActive(GetMember(__result, "gameObject"), true);
+            // Let the game's own placement lifecycle activate and position the plant.
+            // Manually activating here can leave a detached object at the scene origin.
         }
         catch (Exception ex)
         {
@@ -390,13 +405,43 @@ internal static class MimicSeedInjection
         return method?.Invoke(gameObject, new object[] { componentType });
     }
 
+    private static object GetGameObject(object obj)
+    {
+        if (obj == null) return null;
+        var setActive = obj.GetType().GetMethod("SetActive",
+            BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic,
+            null, new[] { typeof(bool) }, null);
+        if (setActive != null) return obj;
+        return GetMember(obj, "gameObject");
+    }
+
     private static void SetObjectName(object obj, string name) => SetMember(obj, "name", name);
     private static void SetTag(object obj, string tag) => SetMember(obj, "tag", tag);
 
-    private static void SetActive(object obj, bool active)
+    private static bool SetActive(object gameObject, bool active)
     {
-        var method = obj?.GetType().GetMethod("SetActive", new[] { typeof(bool) });
-        method?.Invoke(obj, new object[] { active });
+        if (gameObject == null) return false;
+        var method = gameObject.GetType().GetMethod("SetActive",
+            BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic,
+            null, new[] { typeof(bool) }, null);
+        if (method == null) return false;
+        method.Invoke(gameObject, new object[] { active });
+        return true;
+    }
+
+    private static void DestroyUnityObject(object obj)
+    {
+        var target = GetGameObject(obj) ?? obj;
+        if (target == null) return;
+        try
+        {
+            var unityObject = FindType("UnityEngine.Object");
+            var destroy = unityObject?.GetMethods(BindingFlags.Public | BindingFlags.Static)
+                .FirstOrDefault(m => m.Name == "Destroy" && m.GetParameters().Length == 1 &&
+                                     m.GetParameters()[0].ParameterType.IsAssignableFrom(target.GetType()));
+            destroy?.Invoke(null, new[] { target });
+        }
+        catch { }
     }
 
     private static object GetDictionaryValue(object dictionary, object key)
