@@ -118,7 +118,7 @@ internal static class MimicChallengeMode
     private static void InstallAutoSelectHooks()
     {
         var game = FindAssembly("Assembly-CSharp");
-        var harmony = new Harmony("31747-arch.pvzfusion.mimic.challenge");
+        var harmony = new global::HarmonyLib.Harmony("31747-arch.pvzfusion.mimic.challenge");
         var postfix = typeof(MimicChallengeMode).GetMethod(nameof(ChallengeInitCardPostfix),
             BindingFlags.Static | BindingFlags.NonPublic);
         var strategyBase = game.GetType("Il2Cpp.BaseLevelStrategy", false);
