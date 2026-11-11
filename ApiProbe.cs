@@ -148,6 +148,61 @@ internal static class ApiProbe
         }
     }
 
+
+    public static void DumpChallengeApi(Action<string> log)
+    {
+        try
+        {
+            var assembly = AppDomain.CurrentDomain.GetAssemblies()
+                .FirstOrDefault(a => string.Equals(a.GetName().Name, "Assembly-CSharp", StringComparison.OrdinalIgnoreCase));
+            if (assembly == null)
+            {
+                log("[Mimic/ChallengeAPI] Assembly-CSharp is not loaded.");
+                return;
+            }
+
+            Type[] types;
+            try { types = assembly.GetTypes(); }
+            catch (ReflectionTypeLoadException ex) { types = ex.Types.Where(t => t != null).ToArray(); }
+
+            bool Relevant(string name) =>
+                name.IndexOf("Challenge", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                name.IndexOf("GameMode", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                name.IndexOf("LevelSelect", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                name.IndexOf("LevelChoose", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                name.IndexOf("StageSelect", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                name.IndexOf("SelectorScreen", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                name.IndexOf("LevelData", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                name.IndexOf("LevelManager", StringComparison.OrdinalIgnoreCase) >= 0;
+
+            var matches = types.Where(t => Relevant(t.Name) || Relevant(t.FullName ?? ""))
+                .OrderBy(t => t.FullName).Take(100).ToArray();
+
+            log("[Mimic/ChallengeAPI] Found " + matches.Length + " challenge/level-related types.");
+            const BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic |
+                                       BindingFlags.Static | BindingFlags.Instance | BindingFlags.DeclaredOnly;
+            foreach (var type in matches)
+            {
+                log("[Mimic/ChallengeAPI] TYPE " + type.FullName);
+                foreach (var method in type.GetMethods(flags).Where(m => !m.IsSpecialName).Take(45))
+                {
+                    var args = string.Join(", ", method.GetParameters()
+                        .Select(p => SafeTypeName(p.ParameterType) + " " + p.Name));
+                    log("[Mimic/ChallengeAPI] METHOD " + SafeTypeName(method.ReturnType) + " " +
+                        method.Name + "(" + args + ")" + (method.IsStatic ? " [static]" : ""));
+                }
+                foreach (var field in type.GetFields(flags).Take(35))
+                    log("[Mimic/ChallengeAPI] FIELD " + SafeTypeName(field.FieldType) + " " + field.Name);
+                foreach (var property in type.GetProperties(flags).Take(35))
+                    log("[Mimic/ChallengeAPI] PROPERTY " + SafeTypeName(property.PropertyType) + " " + property.Name);
+            }
+        }
+        catch (Exception ex)
+        {
+            log("[Mimic/ChallengeAPI] Scan failed: " + ex);
+        }
+    }
+
     private static string SafeTypeName(Type type)
     {
         try { return type.FullName ?? type.Name; }
