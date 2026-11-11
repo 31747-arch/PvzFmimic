@@ -97,70 +97,71 @@ internal static class MimicUiIntegration
         }
     }
 
-    private static object CloneButtonBeside(object sourceButton)
+    private static object CloneButtonBeside(object sourceGameObject)
     {
-        var gameObjectType = FindType("UnityEngine.GameObject");
-        var unityObjectType = FindType("UnityEngine.Object");
-        if (gameObjectType == null || unityObjectType == null) return null;
+        if (sourceGameObject == null) return null;
 
-        // button_lookMix is a UI component in this game, not a GameObject.
-        // Resolve its owning GameObject before reading transform or cloning it.
-        object sourceGameObject = sourceButton;
-        if (!gameObjectType.IsInstanceOfType(sourceGameObject))
+        // In PvZ Fusion 4.0.5.2 button_lookMix is already a GameObject.
+        // Treating it as a Component and reading Component.gameObject caused
+        // TargetException with the IL2CPP wrapper type.
+        var runtimeGameObjectType = sourceGameObject.GetType();
+        var transformProperty = runtimeGameObjectType.GetProperty("transform",
+            BindingFlags.Instance | BindingFlags.Public);
+        var sourceTransform = transformProperty?.GetValue(sourceGameObject);
+        if (sourceTransform == null)
         {
-            // IL2CPP-generated subclasses can expose inherited Unity properties
-            // through reflection with a declaring type that does not match the
-            // managed wrapper. Resolve gameObject from UnityEngine.Component
-            // itself instead of asking the generated subclass for the property.
-            var componentType = FindType("UnityEngine.Component");
-            var ownerProperty = componentType?.GetProperty("gameObject",
-                BindingFlags.Instance | BindingFlags.Public);
-            if (componentType == null || !componentType.IsInstanceOfType(sourceButton) ||
-                ownerProperty == null)
-                return null;
-
-            sourceGameObject = ownerProperty.GetValue(sourceButton);
+            MelonLogger.Warning("[Mimic/Almanac] button_lookMix did not expose a transform; runtime type=" +
+                runtimeGameObjectType.FullName);
+            return null;
         }
 
-        if (sourceGameObject == null || !gameObjectType.IsInstanceOfType(sourceGameObject))
-            return null;
+        var transformRuntimeType = sourceTransform.GetType();
+        var parent = transformRuntimeType.GetProperty("parent",
+            BindingFlags.Instance | BindingFlags.Public)?.GetValue(sourceTransform);
+        var unityObjectType = FindType("UnityEngine.Object");
+        if (unityObjectType == null) return null;
 
-        var transformProperty = gameObjectType.GetProperty("transform");
-        var sourceTransform = transformProperty?.GetValue(sourceGameObject);
-        if (sourceTransform == null) return null;
-
-        var transformType = sourceTransform.GetType();
-        var parent = transformType.GetProperty("parent")?.GetValue(sourceTransform);
         var instantiate = unityObjectType.GetMethods(BindingFlags.Public | BindingFlags.Static)
             .FirstOrDefault(m =>
             {
                 if (m.Name != "Instantiate" || m.IsGenericMethod || m.GetParameters().Length != 2)
                     return false;
                 var p = m.GetParameters();
-                return p[0].ParameterType.IsAssignableFrom(gameObjectType) &&
-                       p[1].ParameterType.IsAssignableFrom(transformType);
+                return p[0].ParameterType.IsAssignableFrom(runtimeGameObjectType) &&
+                       (parent == null || p[1].ParameterType.IsAssignableFrom(parent.GetType()));
             });
-        if (instantiate == null) return null;
+        if (instantiate == null)
+        {
+            MelonLogger.Warning("[Mimic/Almanac] Could not find a compatible GameObject.Instantiate overload.");
+            return null;
+        }
 
         var clone = instantiate.Invoke(null, new[] { sourceGameObject, parent });
         if (clone == null) return null;
 
-        gameObjectType.GetProperty("name")?.SetValue(clone, "Mimic_AlmanacCategoryButton");
-        var cloneTransform = transformProperty.GetValue(clone);
-        var setParent = cloneTransform.GetType().GetMethods()
-            .FirstOrDefault(m => m.Name == "SetParent" && m.GetParameters().Length == 2);
-        if (setParent != null && parent != null)
-            setParent.Invoke(cloneTransform, new[] { parent, (object)false });
+        clone.GetType().GetProperty("name", BindingFlags.Instance | BindingFlags.Public)
+            ?.SetValue(clone, "Mimic_AlmanacCategoryButton");
 
-        // Put the duplicate one button-width to the right of the Mix button.
+        var cloneTransform = clone.GetType().GetProperty("transform",
+            BindingFlags.Instance | BindingFlags.Public)?.GetValue(clone);
+        if (cloneTransform == null) return null;
+
+        if (parent != null)
+        {
+            var setParent = cloneTransform.GetType().GetMethods()
+                .FirstOrDefault(m => m.Name == "SetParent" && m.GetParameters().Length == 2);
+            setParent?.Invoke(cloneTransform, new[] { parent, (object)false });
+        }
+
+        // Place the cloned button beside the existing Mix category.
         var rectType = FindType("UnityEngine.RectTransform");
         var rect = rectType == null ? null : GetComponent(sourceGameObject, rectType);
         var cloneRect = rectType == null ? null : GetComponent(clone, rectType);
         if (rect != null && cloneRect != null)
         {
-            var sizeDelta = rectType.GetProperty("sizeDelta")?.GetValue(rect);
+            var sizeDelta = rect.GetType().GetProperty("sizeDelta")?.GetValue(rect);
             var width = ReadVectorX(sizeDelta);
-            var positionProperty = rectType.GetProperty("anchoredPosition");
+            var positionProperty = cloneRect.GetType().GetProperty("anchoredPosition");
             var position = positionProperty?.GetValue(cloneRect);
             if (position != null && positionProperty != null)
             {
@@ -174,13 +175,19 @@ internal static class MimicUiIntegration
 
     private static bool WireButtonClick(object gameObject)
     {
-        var buttonType = FindType("UnityEngine.UI.Button");
-        if (buttonType == null) return false;
+        // Almanac category buttons use the game's UIButton.clickEvent,
+        // not UnityEngine.UI.Button.onClick.
+        var buttonType = FindType("Il2Cpp.UIButton") ?? FindType("UIButton");
+        var unityEventType = FindType("UnityEngine.Events.UnityEvent");
+        if (buttonType == null || unityEventType == null) return false;
+
         var button = GetComponent(gameObject, buttonType);
-        var clickEvent = buttonType.GetProperty("onClick")?.GetValue(button);
+        if (button == null) return false;
+
+        var clickEvent = Activator.CreateInstance(unityEventType);
         if (clickEvent == null) return false;
 
-        var addListener = clickEvent.GetType().GetMethods()
+        var addListener = unityEventType.GetMethods()
             .FirstOrDefault(m => m.Name == "AddListener" && m.GetParameters().Length == 1);
         if (addListener == null) return false;
 
@@ -188,10 +195,12 @@ internal static class MimicUiIntegration
         var handler = typeof(MimicUiIntegration).GetMethod(nameof(OnMimicsClicked),
             BindingFlags.Static | BindingFlags.NonPublic);
         var callback = Delegate.CreateDelegate(actionType, handler);
-        clickEvent.GetType().GetMethods()
-            .FirstOrDefault(m => m.Name == "RemoveAllListeners" && m.GetParameters().Length == 0)
-            ?.Invoke(clickEvent, null);
         addListener.Invoke(clickEvent, new object[] { callback });
+
+        var clickEventProperty = button.GetType().GetProperty("clickEvent",
+            BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+        if (clickEventProperty == null || !clickEventProperty.CanWrite) return false;
+        clickEventProperty.SetValue(button, clickEvent);
         return true;
     }
 
