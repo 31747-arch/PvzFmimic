@@ -105,11 +105,23 @@ internal static class MimicUiIntegration
 
         // button_lookMix is a UI component in this game, not a GameObject.
         // Resolve its owning GameObject before reading transform or cloning it.
-        var sourceGameObject = sourceButton;
-        var ownerProperty = sourceButton.GetType().GetProperty("gameObject",
-            BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-        if (ownerProperty != null)
+        object sourceGameObject = sourceButton;
+        if (!gameObjectType.IsInstanceOfType(sourceGameObject))
+        {
+            // IL2CPP-generated subclasses can expose inherited Unity properties
+            // through reflection with a declaring type that does not match the
+            // managed wrapper. Resolve gameObject from UnityEngine.Component
+            // itself instead of asking the generated subclass for the property.
+            var componentType = FindType("UnityEngine.Component");
+            var ownerProperty = componentType?.GetProperty("gameObject",
+                BindingFlags.Instance | BindingFlags.Public);
+            if (componentType == null || !componentType.IsInstanceOfType(sourceButton) ||
+                ownerProperty == null)
+                return null;
+
             sourceGameObject = ownerProperty.GetValue(sourceButton);
+        }
+
         if (sourceGameObject == null || !gameObjectType.IsInstanceOfType(sourceGameObject))
             return null;
 
