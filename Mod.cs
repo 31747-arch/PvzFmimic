@@ -30,6 +30,7 @@ public sealed class MimicMod : MelonMod
         {
             MimicSeedInjection.Install(LoggerInstance);
             LoggerInstance.Msg("[Mimic/Init] Seed-hook setup call completed.");
+            MimicChallengeMode.Install(LoggerInstance);
             ApiProbe.DumpChallengeApi(message => LoggerInstance.Msg(message));
             ApiProbe.DumpChallengeRegistryApi(message => LoggerInstance.Msg(message));
             ApiProbe.DumpChallengeIntegrationApi(message => LoggerInstance.Msg(message));
