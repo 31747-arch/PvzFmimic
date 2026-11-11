@@ -22,7 +22,7 @@ internal static class ApiProbe
             try { types = assembly.GetTypes(); }
             catch (ReflectionTypeLoadException ex) { types = ex.Types.Where(t => t != null).ToArray(); }
 
-            log("[Mimic/API] Expanded selection/registration scan in " + assembly.FullName);
+            log("[Mimic/API] Stackable Mimic runtime scan in " + assembly.FullName);
             const BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic |
                                        BindingFlags.Static | BindingFlags.Instance |
                                        BindingFlags.DeclaredOnly;
@@ -50,7 +50,8 @@ internal static class ApiProbe
             {
                 "PlantMixTreeManager", "PlantMixTreeNode", "PlantMixTreeManagerExample",
                 "CustomPlantManager", "CustomPlant", "PlantDevelopData", "PlantType",
-                "InitBoard", "CardUI", "CardSlotManager"
+                "InitBoard", "CardUI", "CardSlotManager", "Plant", "PlantManager",
+                "Projectile", "Zombie", "Bullet", "PlantData", "PlantAttack", "PlantShooter"
             };
 
             foreach (var name in criticalNames)
