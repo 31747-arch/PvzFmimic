@@ -9,30 +9,12 @@
     <RootNamespace>PvzFmimic</RootNamespace>
   </PropertyGroup>
 
-  <!-- Game and MelonLoader references from the libs-source submodule. -->
+  <!-- The game and MelonLoader reference assemblies are supplied by libs-source. -->
   <ItemGroup>
-    <Reference Include="MelonLoader">
-      <HintPath>libs-source/net6/MelonLoader.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="0Harmony">
-      <HintPath>libs-source/net6/0Harmony.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="Il2CppInterop.Runtime">
-      <HintPath>libs-source/net6/Il2CppInterop.Runtime.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="Assembly-CSharp">
-      <HintPath>libs-source/Il2CppAssemblies/Assembly-CSharp.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="Il2Cppmscorlib">
-      <HintPath>libs-source/Il2CppAssemblies/Il2Cppmscorlib.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="UnityEngine.CoreModule">
-      <HintPath>libs-source/Il2CppAssemblies/UnityEngine.CoreModule.dll</HintPath>
+    <DllFiles Include="libs-source/libs/Il2CppAssemblies/**/*.dll" />
+    <DllFiles Include="libs-source/libs/net6/**/*.dll" />
+    <Reference Include="@(DllFiles->'%(Filename)')">
+      <HintPath>%(DllFiles.FullPath)</HintPath>
       <Private>false</Private>
     </Reference>
   </ItemGroup>
