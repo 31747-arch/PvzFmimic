@@ -27,7 +27,7 @@ internal static class MimicSeedInjection
                 return;
             }
 
-            var harmony = new Harmony("31747-arch.pvzfusion.mimic.seed");
+            var harmony = new global::HarmonyLib.Harmony("31747-arch.pvzfusion.mimic.seed");
             var postfix = typeof(MimicSeedInjection).GetMethod(nameof(AddCardPostfix),
                 BindingFlags.Static | BindingFlags.NonPublic);
             harmony.Patch(addCard, postfix: new HarmonyMethod(postfix));
