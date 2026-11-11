@@ -162,12 +162,22 @@ internal static class MimicSeedInjection
             // the component wrapper (which silently did nothing before).
             var mimicPrefabObject = GetGameObject(mimicPrefab);
             var mimicPreviewObject = GetGameObject(mimicPreview);
-            if (mimicPrefabObject == null || mimicPreviewObject == null ||
-                !SetActive(mimicPrefabObject, false) || !SetActive(mimicPreviewObject, false))
+            var prefabDeactivated = mimicPrefabObject != null && SetActive(mimicPrefabObject, false);
+            var previewDeactivated = mimicPreviewObject != null && SetActive(mimicPreviewObject, false);
+            if (!prefabDeactivated || !previewDeactivated)
             {
+                _logger?.Warning("[Mimic/Seed] Clone inspection failed. " +
+                    "Prefab source=" + DescribeObject(sourcePrefab) +
+                    "; prefab clone=" + DescribeObject(mimicPrefab) +
+                    "; prefab GameObject=" + DescribeObject(mimicPrefabObject) +
+                    "; prefab SetActive=" + prefabDeactivated +
+                    "; preview source=" + DescribeObject(sourcePreview) +
+                    "; preview clone=" + DescribeObject(mimicPreview) +
+                    "; preview GameObject=" + DescribeObject(mimicPreviewObject) +
+                    "; preview SetActive=" + previewDeactivated + ".");
                 DestroyUnityObject(mimicPrefab);
                 DestroyUnityObject(mimicPreview);
-                _logger?.Warning("[Mimic/Seed] Could not deactivate cloned resources; discarded them to prevent scene objects at the origin.");
+                _logger?.Warning("[Mimic/Seed] Clones were discarded safely; no scene object will be left at the origin.");
                 return false;
             }
 
@@ -326,40 +336,24 @@ internal static class MimicSeedInjection
                 colorCtor.Invoke(new object[] { r, g, b, a });
 
             var transparent = MakeColor(0f, 0f, 0f, 0f);
-            var green = MakeColor(0.20f, 0.72f, 0.30f, 1f);
-            var darkGreen = MakeColor(0.08f, 0.36f, 0.16f, 1f);
-            var white = MakeColor(1f, 1f, 0.92f, 1f);
-            var black = MakeColor(0.08f, 0.08f, 0.08f, 1f);
+            var outline = MakeColor(0.10f, 0.12f, 0.16f, 1f);
+            var top = MakeColor(0.42f, 0.78f, 0.98f, 1f);
+            var left = MakeColor(0.20f, 0.52f, 0.82f, 1f);
+            var right = MakeColor(0.12f, 0.36f, 0.66f, 1f);
+
+            var silhouette = new[] { 32, 59, 57, 45, 57, 18, 32, 5, 7, 18, 7, 45 };
+            var topFace = new[] { 32, 55, 52, 44, 32, 33, 12, 44 };
+            var leftFace = new[] { 10, 42, 30, 31, 30, 10, 10, 20 };
+            var rightFace = new[] { 34, 31, 54, 42, 54, 20, 34, 10 };
 
             for (var y = 0; y < 64; y++)
             for (var x = 0; x < 64; x++)
             {
-                var dx = (x - 32) / 23f;
-                var dy = (y - 32) / 25f;
-                var d = dx * dx + dy * dy;
-                object pixel = d <= 1f ? green : transparent;
-
-                // Two leaves and a small stem make the placeholder read as a plant.
-                if (y > 43 && y < 57 && x > 20 && x < 44 && Math.Abs(x - 32) < (y - 41) * 0.65f)
-                    pixel = darkGreen;
-                if (x > 6 && x < 31 && y > 43 && y < 54 &&
-                    Math.Abs((x - 18) / 13f) + Math.Abs((y - 49) / 5f) < 1f)
-                    pixel = darkGreen;
-                if (x > 33 && x < 58 && y > 43 && y < 54 &&
-                    Math.Abs((x - 46) / 13f) + Math.Abs((y - 49) / 5f) < 1f)
-                    pixel = darkGreen;
-
-                // Eyes and a little smile.
-                if ((x - 24) * (x - 24) + (y - 34) * (y - 34) < 9 ||
-                    (x - 40) * (x - 40) + (y - 34) * (y - 34) < 9)
-                    pixel = white;
-                if ((x - 24) * (x - 24) + (y - 34) * (y - 34) < 3 ||
-                    (x - 40) * (x - 40) + (y - 34) * (y - 34) < 3)
-                    pixel = black;
-                if (y >= 21 && y <= 25 && x >= 25 && x <= 39 &&
-                    Math.Abs(y - (22 + (int)(Math.Abs(x - 32) * 0.25f))) <= 1)
-                    pixel = darkGreen;
-
+                object pixel = transparent;
+                if (InsidePolygon(x, y, silhouette)) pixel = outline;
+                if (InsidePolygon(x, y, leftFace)) pixel = left;
+                if (InsidePolygon(x, y, rightFace)) pixel = right;
+                if (InsidePolygon(x, y, topFace)) pixel = top;
                 setPixel.Invoke(texture, new[] { (object)x, y, pixel });
             }
 
@@ -379,9 +373,25 @@ internal static class MimicSeedInjection
         }
         catch (Exception ex)
         {
-            _logger?.Warning("[Mimic/Seed] Placeholder sprite generation failed; using the base preview: " + ex.Message);
+            _logger?.Warning("[Mimic/Seed] Cube placeholder sprite generation failed: " + ex);
             return null;
         }
+    }
+
+    private static bool InsidePolygon(int x, int y, int[] points)
+    {
+        var inside = false;
+        for (int i = 0, j = points.Length - 2; i < points.Length; j = i, i += 2)
+        {
+            var xi = points[i];
+            var yi = points[i + 1];
+            var xj = points[j];
+            var yj = points[j + 1];
+            var intersects = ((yi > y) != (yj > y)) &&
+                (x < (double)(xj - xi) * (y - yi) / (yj - yi) + xi);
+            if (intersects) inside = !inside;
+        }
+        return inside;
     }
 
     private static object Instantiate(object original)
@@ -408,11 +418,57 @@ internal static class MimicSeedInjection
     private static object GetGameObject(object obj)
     {
         if (obj == null) return null;
-        var setActive = obj.GetType().GetMethod("SetActive",
-            BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic,
-            null, new[] { typeof(bool) }, null);
-        if (setActive != null) return obj;
-        return GetMember(obj, "gameObject");
+        var type = obj.GetType();
+        for (var current = type; current != null; current = current.BaseType)
+        {
+            var setActive = current.GetMethod("SetActive",
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly,
+                null, new[] { typeof(bool) }, null);
+            if (setActive != null) return obj;
+        }
+
+        // Il2CppInterop wrappers can expose inherited Unity properties differently
+        // from ordinary managed Unity objects, so inspect the full type hierarchy.
+        for (var current = type; current != null; current = current.BaseType)
+        {
+            var property = current.GetProperty("gameObject",
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
+            if (property?.GetGetMethod(true) != null)
+            {
+                try { return property.GetValue(obj); } catch { }
+            }
+
+            var field = current.GetField("gameObject",
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
+            if (field != null)
+            {
+                try { return field.GetValue(obj); } catch { }
+            }
+        }
+        return null;
+    }
+
+    private static string DescribeObject(object obj)
+    {
+        if (obj == null) return "<null>";
+        var type = obj.GetType();
+        var hasSetActive = type.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+            .Any(m => m.Name == "SetActive" && m.GetParameters().Length == 1 &&
+                      m.GetParameters()[0].ParameterType == typeof(bool));
+        var hasGameObjectMember = false;
+        for (var current = type; current != null; current = current.BaseType)
+        {
+            if (current.GetProperty("gameObject", BindingFlags.Instance | BindingFlags.Public |
+                    BindingFlags.NonPublic | BindingFlags.DeclaredOnly) != null ||
+                current.GetField("gameObject", BindingFlags.Instance | BindingFlags.Public |
+                    BindingFlags.NonPublic | BindingFlags.DeclaredOnly) != null)
+            {
+                hasGameObjectMember = true;
+                break;
+            }
+        }
+        return type.FullName + " [SetActive(bool)=" + hasSetActive +
+               ", gameObject member=" + hasGameObjectMember + "]";
     }
 
     private static void SetObjectName(object obj, string name) => SetMember(obj, "name", name);
