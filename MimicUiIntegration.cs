@@ -153,21 +153,27 @@ internal static class MimicUiIntegration
             setParent?.Invoke(cloneTransform, new[] { parent, (object)false });
         }
 
-        // Place the cloned button beside the existing Mix category.
-        var rectType = FindType("UnityEngine.RectTransform");
-        var rect = rectType == null ? null : GetComponent(sourceGameObject, rectType);
-        var cloneRect = rectType == null ? null : GetComponent(clone, rectType);
-        if (rect != null && cloneRect != null)
+        // Fusion's Almanac category buttons are stacked vertically.
+        // Match the game's native layout used by the custom-plant Almanac extension.
+        var childCountProperty = parent?.GetType().GetProperty("childCount");
+        var childCount = childCountProperty == null ? 0 : Convert.ToInt32(childCountProperty.GetValue(parent));
+        var localPositionProperty = cloneTransform.GetType().GetProperty("localPosition");
+        var localPosition = localPositionProperty?.GetValue(cloneTransform);
+        if (localPosition != null && localPositionProperty != null)
         {
-            var sizeDelta = rect.GetType().GetProperty("sizeDelta")?.GetValue(rect);
-            var width = ReadVectorX(sizeDelta);
-            var positionProperty = cloneRect.GetType().GetProperty("anchoredPosition");
-            var position = positionProperty?.GetValue(cloneRect);
-            if (position != null && positionProperty != null)
-            {
-                var moved = SetVectorX(position, ReadVectorX(position) + (width > 0 ? width + 8f : 120f));
-                positionProperty.SetValue(cloneRect, moved);
-            }
+            var moved = SetVectorY(localPosition, -44f * childCount + 72f);
+            localPositionProperty.SetValue(cloneTransform, moved);
+        }
+
+        // Extend the category list's RectTransform so the new button remains visible.
+        var rectType = FindType("UnityEngine.RectTransform");
+        var contentRect = rectType == null || parent == null ? null : GetComponent(parent, rectType);
+        if (contentRect != null)
+        {
+            var sizeProperty = contentRect.GetType().GetProperty("sizeDelta");
+            var size = sizeProperty?.GetValue(contentRect);
+            if (size != null && sizeProperty != null)
+                sizeProperty.SetValue(contentRect, SetVectorY(size, ReadVectorY(size) + 80f));
         }
 
         return clone;
@@ -299,6 +305,28 @@ internal static class MimicUiIntegration
         var xField = type.GetField("x");
         if (xField != null) xField.SetValue(copy, x);
         else type.GetProperty("x")?.SetValue(copy, x);
+        return copy;
+    }
+
+    private static float ReadVectorY(object vector)
+    {
+        if (vector == null) return 0f;
+        var type = vector.GetType();
+        var field = type.GetField("y");
+        if (field != null) return Convert.ToSingle(field.GetValue(vector));
+        var property = type.GetProperty("y");
+        return property == null ? 0f : Convert.ToSingle(property.GetValue(vector));
+    }
+
+    private static object SetVectorY(object vector, float y)
+    {
+        var type = vector.GetType();
+        var copy = Activator.CreateInstance(type);
+        foreach (var field in type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+            field.SetValue(copy, field.GetValue(vector));
+        var yField = type.GetField("y");
+        if (yField != null) yField.SetValue(copy, y);
+        else type.GetProperty("y")?.SetValue(copy, y);
         return copy;
     }
 
