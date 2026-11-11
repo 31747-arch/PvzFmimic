@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <OutputType>Library</OutputType>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>PvzFmimic</AssemblyName>
+    <RootNamespace>PvzFmimic</RootNamespace>
+  </PropertyGroup>
+
+  <!-- The game and MelonLoader reference assemblies are supplied by libs-source. -->
+  <ItemGroup>
+    <DllFiles Include="libs-source/libs/Il2CppAssemblies/**/*.dll" />
+    <DllFiles Include="libs-source/libs/net6/**/*.dll" />
+    <Reference Include="@(DllFiles->'%(Filename)')">
+      <HintPath>%(DllFiles.FullPath)</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+</Project>
