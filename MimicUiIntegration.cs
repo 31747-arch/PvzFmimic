@@ -142,8 +142,18 @@ internal static class MimicUiIntegration
         var unityObjectType = FindType("UnityEngine.Object");
         if (gameObjectType == null || unityObjectType == null) return null;
 
+        // button_lookMix is a UI component in this game, not a GameObject.
+        // Resolve its owning GameObject before reading transform or cloning it.
+        var sourceGameObject = sourceButton;
+        var ownerProperty = sourceButton.GetType().GetProperty("gameObject",
+            BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+        if (ownerProperty != null)
+            sourceGameObject = ownerProperty.GetValue(sourceButton);
+        if (sourceGameObject == null || !gameObjectType.IsInstanceOfType(sourceGameObject))
+            return null;
+
         var transformProperty = gameObjectType.GetProperty("transform");
-        var sourceTransform = transformProperty?.GetValue(sourceButton);
+        var sourceTransform = transformProperty?.GetValue(sourceGameObject);
         if (sourceTransform == null) return null;
 
         var transformType = sourceTransform.GetType();
@@ -159,7 +169,7 @@ internal static class MimicUiIntegration
             });
         if (instantiate == null) return null;
 
-        var clone = instantiate.Invoke(null, new[] { sourceButton, parent });
+        var clone = instantiate.Invoke(null, new[] { sourceGameObject, parent });
         if (clone == null) return null;
 
         gameObjectType.GetProperty("name")?.SetValue(clone, "Mimic_AlmanacCategoryButton");
@@ -171,7 +181,7 @@ internal static class MimicUiIntegration
 
         // Put the duplicate one button-width to the right of the Mix button.
         var rectType = FindType("UnityEngine.RectTransform");
-        var rect = rectType == null ? null : GetComponent(sourceButton, rectType);
+        var rect = rectType == null ? null : GetComponent(sourceGameObject, rectType);
         var cloneRect = rectType == null ? null : GetComponent(clone, rectType);
         if (rect != null && cloneRect != null)
         {
