@@ -49,6 +49,8 @@ internal static class MimicChallengeMode
         SetMember(challenge, "Level", Enum.ToObject(challengeEnum, ChallengeNumber));
         SetMember(challenge, "Name", "Mimic: Copycat Mayhem");
         SetMember(challenge, "MaxWave", 10);
+        SetMember(challenge, "CardCount", 1);
+        SetPreselectedMimic(challenge);
 
         var sceneType = FindType("Il2Cpp.SceneType");
         if (sceneType != null) SetMember(challenge, "SceneType", ParseEnumOrFirst(sceneType, "Day"));
@@ -123,16 +125,13 @@ internal static class MimicChallengeMode
             BindingFlags.Static | BindingFlags.NonPublic);
         var strategyBase = game.GetType("Il2Cpp.BaseLevelStrategy", false);
         var patched = 0;
-
-        if (strategyBase != null)
+        var initCard = strategyBase?.GetMethod("InitCard",
+            BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic,
+            null, new[] { FindType("Il2Cpp.InitBoard") }, null);
+        if (initCard != null)
         {
-            foreach (var type in game.GetTypes().Where(t => strategyBase.IsAssignableFrom(t)))
-            foreach (var method in type.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-                         .Where(m => m.Name == "InitCard" && m.GetParameters().Length == 1))
-            {
-                try { harmony.Patch(method, postfix: new HarmonyMethod(postfix)); patched++; }
-                catch { }
-            }
+            try { harmony.Patch(initCard, postfix: new HarmonyMethod(postfix)); patched++; }
+            catch (Exception ex) { _logger?.Warning("[Mimic/Challenge] InitCard hook: " + ex.Message); }
         }
 
         var initBoard = game.GetTypes().FirstOrDefault(t => t.Name == "InitBoard");
@@ -146,16 +145,20 @@ internal static class MimicChallengeMode
         _logger?.Msg("[Mimic/Challenge] Mimic auto-select hooks installed: " + patched + ".");
     }
 
-    private static void ChallengeInitCardPostfix(object __instance)
+    private static void ChallengeInitCardPostfix(object __instance, object[] __args)
     {
-        if (__instance == null || !_registered || !IsMimicChallengeActive()) return;
+        if (!_registered || !IsMimicChallengeActive()) return;
         try
         {
-            var preSelect = __instance.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+            var board = __args?.FirstOrDefault(x => x != null && x.GetType().Name == "InitBoard");
+            if (board == null && __instance != null && __instance.GetType().Name == "InitBoard")
+                board = __instance;
+            if (board == null) return;
+            var preSelect = board.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
                 .FirstOrDefault(m => m.Name == "PreSelect" && m.GetParameters().Length == 1 &&
                                      m.GetParameters()[0].ParameterType.IsEnum);
             if (preSelect == null) return;
-            preSelect.Invoke(__instance, new[] { Enum.ToObject(preSelect.GetParameters()[0].ParameterType, MimicPlantId) });
+            preSelect.Invoke(board, new[] { Enum.ToObject(preSelect.GetParameters()[0].ParameterType, MimicPlantId) });
             _logger?.Msg("[Mimic/Challenge] Mimic auto-selected.");
         }
         catch (Exception ex) { _logger?.Warning("[Mimic/Challenge] Auto-select failed: " + ex.Message); }
@@ -176,6 +179,30 @@ internal static class MimicChallengeMode
                    Convert.ToInt32(FindMember(args[0], "LevelNumber")) == ChallengeNumber;
         }
         catch { return false; }
+    }
+
+    private static void SetPreselectedMimic(object challenge)
+    {
+        try
+        {
+            const BindingFlags flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+            var type = challenge.GetType();
+            var props = type.GetProperties(flags).Concat(type.BaseType?.GetProperties(flags) ?? Array.Empty<PropertyInfo>());
+            var property = props.FirstOrDefault(p => p.Name.IndexOf("PreselectCards", StringComparison.OrdinalIgnoreCase) >= 0 && p.PropertyType.IsGenericType);
+            if (property == null) return;
+            var list = Activator.CreateInstance(property.PropertyType);
+            var add = property.PropertyType.GetMethods().FirstOrDefault(m => m.Name == "Add" && m.GetParameters().Length == 1 && m.GetParameters()[0].ParameterType.IsEnum);
+            if (list == null || add == null) return;
+            add.Invoke(list, new[] { Enum.ToObject(add.GetParameters()[0].ParameterType, MimicPlantId) });
+            if (property.CanWrite) property.SetValue(challenge, list);
+            else
+            {
+                var fields = type.GetFields(flags).Concat(type.BaseType?.GetFields(flags) ?? Array.Empty<FieldInfo>());
+                fields.FirstOrDefault(x => x.Name.IndexOf("PreselectCards", StringComparison.OrdinalIgnoreCase) >= 0)?.SetValue(challenge, list);
+            }
+            _logger?.Msg("[Mimic/Challenge] Mimic added to preselected plants.");
+        }
+        catch (Exception ex) { _logger?.Warning("[Mimic/Challenge] Preselection setup: " + ex.Message); }
     }
 
     private static object ParseEnumOrFirst(Type type, string preferred)
