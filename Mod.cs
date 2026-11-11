@@ -1,5 +1,7 @@
 using MelonLoader;
 
+[assembly: MelonInfo(typeof(PvzFmimic.MimicMod), "PvZ Fusion Mimic", "1.0.1", "31747-arch")]
+
 namespace PvzFmimic;
 
 public sealed class MimicMod : MelonMod
