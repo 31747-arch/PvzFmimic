@@ -19,29 +19,29 @@ public sealed class MimicMod : MelonMod
 
     public override void OnSceneWasLoaded(int buildIndex, string sceneName)
     {
-        if (_seedHookAttempted)
-            return;
-
-        _seedHookAttempted = true;
-        LoggerInstance.Msg("[Mimic/Init] First scene loaded: " + sceneName +
-            " (build index " + buildIndex + "). Starting seed-hook setup.");
-
-        try
+        if (!_seedHookAttempted)
         {
-            MimicSeedInjection.Install(LoggerInstance);
-            LoggerInstance.Msg("[Mimic/Init] Seed-hook setup call completed.");
-            MimicChallengeMode.Install(LoggerInstance);
-            ApiProbe.DumpChallengeApi(message => LoggerInstance.Msg(message));
-            ApiProbe.DumpChallengeRegistryApi(message => LoggerInstance.Msg(message));
-            ApiProbe.DumpChallengeIntegrationApi(message => LoggerInstance.Msg(message));
-            ApiProbe.DumpChallengeUiApi(message => LoggerInstance.Msg(message));
-        }
-        catch (Exception ex)
-        {
-            LoggerInstance.Warning("[Mimic/Init] Seed-hook setup failed: " + ex);
+            _seedHookAttempted = true;
+            LoggerInstance.Msg("[Mimic/Init] First scene loaded: " + sceneName +
+                " (build index " + buildIndex + "). Starting seed-hook setup.");
+
+            try
+            {
+                MimicSeedInjection.Install(LoggerInstance);
+                LoggerInstance.Msg("[Mimic/Init] Seed-hook setup call completed.");
+                ApiProbe.DumpChallengeApi(message => LoggerInstance.Msg(message));
+                ApiProbe.DumpChallengeRegistryApi(message => LoggerInstance.Msg(message));
+                ApiProbe.DumpChallengeIntegrationApi(message => LoggerInstance.Msg(message));
+                ApiProbe.DumpChallengeUiApi(message => LoggerInstance.Msg(message));
+            }
+            catch (Exception ex)
+            {
+                LoggerInstance.Warning("[Mimic/Init] Seed-hook setup failed: " + ex);
+            }
         }
 
-        // Almanac integration is intentionally not initialized yet. The current
-        // priority is getting the Mimic seed registered without destabilizing startup.
+        // The registry may not exist in the first scene, so retry the Challenge
+        // registration on later scene loads until it succeeds.
+        MimicChallengeMode.Install(LoggerInstance);
     }
 }
