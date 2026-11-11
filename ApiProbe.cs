@@ -204,6 +204,54 @@ internal static class ApiProbe
     }
 
 
+    public static void DumpChallengeRegistryApi(Action<string> log)
+    {
+        try
+        {
+            var assembly = AppDomain.CurrentDomain.GetAssemblies()
+                .FirstOrDefault(a => string.Equals(a.GetName().Name, "Assembly-CSharp", StringComparison.OrdinalIgnoreCase));
+            if (assembly == null) { log("[Mimic/ChallengeRegistry] Assembly-CSharp is not loaded."); return; }
+
+            Type[] types;
+            try { types = assembly.GetTypes(); }
+            catch (ReflectionTypeLoadException ex) { types = ex.Types.Where(t => t != null).ToArray(); }
+
+            var selected = types.Where(t =>
+                t.Name == "LevelRegistry" || t.Name == "LevelLoader" ||
+                t.Name == "LevelSaver" || t.Name == "LevelDeleter" ||
+                t.Name == "ChallengeLevelData" ||
+                t.Name.IndexOf("ChallengeStrategy", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                (t.Name.IndexOf("Challenge", StringComparison.OrdinalIgnoreCase) >= 0 &&
+                 t.Name.IndexOf("Button", StringComparison.OrdinalIgnoreCase) >= 0))
+                .OrderBy(t => t.FullName).Take(100).ToArray();
+
+            log("[Mimic/ChallengeRegistry] Found " + selected.Length + " registry/strategy types.");
+            const BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic |
+                BindingFlags.Static | BindingFlags.Instance | BindingFlags.DeclaredOnly;
+            foreach (var type in selected)
+            {
+                string baseName = type.BaseType == null ? "<none>" : SafeTypeName(type.BaseType);
+                log("[Mimic/ChallengeRegistry] TYPE " + type.FullName + " BASE " + baseName);
+                foreach (var ctor in type.GetConstructors(flags).Take(12))
+                {
+                    var args = string.Join(", ", ctor.GetParameters().Select(p => SafeTypeName(p.ParameterType) + " " + p.Name));
+                    log("[Mimic/ChallengeRegistry] CTOR " + type.Name + "(" + args + ")");
+                }
+                foreach (var method in type.GetMethods(flags).Where(m => !m.IsSpecialName).Take(80))
+                {
+                    var args = string.Join(", ", method.GetParameters().Select(p => SafeTypeName(p.ParameterType) + " " + p.Name));
+                    log("[Mimic/ChallengeRegistry] METHOD " + SafeTypeName(method.ReturnType) + " " +
+                        method.Name + "(" + args + ")" + (method.IsStatic ? " [static]" : ""));
+                }
+                foreach (var property in type.GetProperties(flags).Take(60))
+                    log("[Mimic/ChallengeRegistry] PROPERTY " + SafeTypeName(property.PropertyType) + " " + property.Name);
+                foreach (var field in type.GetFields(flags).Where(x => !x.Name.StartsWith("Native")).Take(60))
+                    log("[Mimic/ChallengeRegistry] FIELD " + SafeTypeName(field.FieldType) + " " + field.Name);
+            }
+        }
+        catch (Exception ex) { log("[Mimic/ChallengeRegistry] Scan failed: " + ex); }
+    }
+
     public static void DumpChallengeUiApi(Action<string> log)
     {
         try
