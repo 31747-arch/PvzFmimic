@@ -348,7 +348,14 @@ internal static class MimicSeedInjection
                 setPixel.Invoke(texture, new[] { (object)x, y, pixel });
             }
 
-            textureType.GetMethod("Apply", Type.EmptyTypes)?.Invoke(texture, null);
+            var apply = textureType.GetMethods(BindingFlags.Instance | BindingFlags.Public)
+                .FirstOrDefault(m => m.Name == "Apply");
+            if (apply != null)
+            {
+                var applyArgs = apply.GetParameters().Select(p =>
+                    p.ParameterType == typeof(bool) ? (object)(p.Name == "updateMipmaps") : null).ToArray();
+                apply.Invoke(texture, applyArgs);
+            }
             var rect = Activator.CreateInstance(rectType, new object[] { 0f, 0f, 64f, 64f });
             var pivot = Activator.CreateInstance(vectorType, new object[] { 0.5f, 0.5f });
             var create = spriteType.GetMethods(BindingFlags.Public | BindingFlags.Static)
