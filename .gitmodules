@@ -1,0 +1,3 @@
+[submodule "libs-source"]
+	path = libs-source
+	url = https://github.com/i-am-M73M/SeedApocalypse4.git
