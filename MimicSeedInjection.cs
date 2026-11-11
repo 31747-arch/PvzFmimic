@@ -242,6 +242,10 @@ internal static class MimicSeedInjection
                 plantTypeProperty.SetValue(__result, Enum.ToObject(plantTypeProperty.PropertyType, MimicPlantId));
             else
                 SetMember(__result, "thePlantType", Enum.ToObject(FindType("Il2Cpp.PlantType"), MimicPlantId));
+
+            // The cloned prefab is kept inactive so it cannot appear in the lawn
+            // before placement. Activate the actual instance once the game creates it.
+            SetActive(GetMember(__result, "gameObject"), true);
         }
         catch (Exception ex)
         {
