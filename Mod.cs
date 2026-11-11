@@ -11,6 +11,6 @@ public sealed class MimicMod : MelonMod
         LoggerInstance.Msg("PvZ Fusion Mimic loaded.");
         LoggerInstance.Msg("Running a safe game-API inspection to prepare the Mimic plant.");
         ApiProbe.Dump(message => LoggerInstance.Msg(message));
-        MimicSeedInjection.Install(LoggerInstance);
+        MimicUiIntegration.Install(LoggerInstance);
     }
 }
